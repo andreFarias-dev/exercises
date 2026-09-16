@@ -3,20 +3,29 @@ const model = require("../model/playlist")
 module.exports = {
   // show playlists: GET /playlists
   showPlaylists: (req, res) => {
+    if (model.playlists.length === 0) {
+      return res.json({ message: "No playlists added yet." })
+    }
     res.json(model.playlists)
   },
 
   // show playlist: GET /playlists/:id
   showPlaylist: (req, res) => {
     const id = req.params.id
-    res.json(model.showPlaylist(id))
+    const result = model.showPlaylist(id)
+
+    if (result === null) return res.status(404).json({
+      error: "Playlist not found."
+    })
+
+    res.json(result)
   },
 
   // create playlist: POST /playlists
   createPlaylist: (req, res) => {
     const { name, tags } = req.body
     const playlist = model.createPlaylist(name, ...tags)
-    res.json(model.savePlaylist(playlist))
+    res.status(201).json(model.savePlaylist(playlist))
   },
   
   // create song: POST /playlists/:id/songs
@@ -25,7 +34,14 @@ module.exports = {
     const id = req.params.id
 
     const song = model.createSong(title, year, author, album)
-    res.json(model.saveSong(id, song))
+
+    const result = model.saveSong(id, song)
+
+    if (result === null) return res.status(404).json({
+      error: "Playlist not found."
+    })
+
+    res.status(201).json(result)
   },
 
   // update playlist: PUT /playlists/:id
@@ -33,18 +49,36 @@ module.exports = {
     const id = req.params.id
     const update = req.body
 
-    res.json(model.updatePlaylist(id, update))
+    const result = model.updatePlaylist(id, update)
+
+    if (result === null) return res.status(404).json({
+      error: "Playlist not found."
+    })
+
+    res.json(result)
   },
 
   // delete playlist: DELETE /playlists/:id
   deletePlaylist: (req, res) => {
     const id = req.params.id
-    res.json(model.deletePlaylist(id))
+    const result = model.deletePlaylist(id)
+
+    if (result === null) return res.status(404).json({
+      error: "Playlist not found."
+    })
+
+    res.json(result)
   },
 
   // delete song: DELETE /playlists/:playlistId/songs/:songId
   deleteSong: (req, res) => {
     const { playlistId, songId } = req.params
-    res.json(model.deleteSong(playlistId, songId))
+    const result = model.deleteSong(playlistId, songId)
+
+    if (result === null) return res.status(404).json({
+      error: "Playlist or song not found."
+    })
+
+    res.json(result)
   }
 }

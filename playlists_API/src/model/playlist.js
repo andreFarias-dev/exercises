@@ -17,6 +17,7 @@ const model = {
   // save
   savePlaylist(playlist) {
     playlists.push(playlist)
+    return playlists
   },
 
   // update
