@@ -1,13 +1,13 @@
 const playlists = []
 
-module.exports = {
+const model = {
   playlists,
 
   // PLAYLIST FUNCTIONS:
   // create
   createPlaylist(name, ...tags) {
     return {
-      id: Date.now(),
+      id: Date.now().toString(),
       name: name,
       tags: tags,
       songs: []
@@ -50,7 +50,7 @@ module.exports = {
   // create
   createSong(title, year, author, album) {
     return {
-      id: Date.now(),
+      id: Date.now().toString(),
       title: title,
       year: year,
       author: author,
@@ -85,3 +85,5 @@ module.exports = {
     return playlists.findIndex(playlist => playlist.id === id)
   }
 }
+
+module.exports = model  
