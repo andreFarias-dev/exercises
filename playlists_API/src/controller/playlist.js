@@ -23,8 +23,8 @@ module.exports = {
 
   // create playlist: POST /playlists
   createPlaylist: (req, res) => {
-    const { name, tags } = req.body
-    const playlist = model.createPlaylist(name, ...tags)
+    const body = req.body
+    const playlist = model.createPlaylist(body)
     res.status(201).json(model.savePlaylist(playlist))
   },
   

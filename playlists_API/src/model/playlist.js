@@ -5,12 +5,13 @@ const model = {
 
   // PLAYLIST FUNCTIONS:
   // create
-  createPlaylist(name, ...tags) {
+  createPlaylist(body) {
+    const {name, tags, songs} = body
     return {
       id: Date.now().toString(),
       name: name,
-      tags: tags,
-      songs: []
+      tags: tags ?? [],
+      songs: songs ?? []
     }
   },
 
