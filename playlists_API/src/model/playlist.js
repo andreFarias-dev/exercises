@@ -61,7 +61,7 @@ const model = {
 
   // save
   saveSong(playlistId, song) {
-    const index = findIndex(playlistId)
+    const index = this.findIndex(playlistId)
 
     if (index === -1) return null
 
