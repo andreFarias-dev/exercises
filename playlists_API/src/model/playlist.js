@@ -71,7 +71,7 @@ const model = {
 
   // delete
   deleteSong(playlistId, songId) {
-    const playlistIndex = findIndex(playlistId)
+    const playlistIndex = this.findIndex(playlistId)
     if (playlistIndex === -1) return null
 
     const songIndex = playlists[playlistIndex].songs.findIndex(song => song.id === songId)
